@@ -1,4 +1,4 @@
-import { labelFor } from "../helpers/html.js";
+import { labelFor } from "../../../src/html.js";
 
 export const debugCheckboxBuilder = ({ loop, log, resetFn, getInputIdFn }) => {
   return (checked, updateFn) => {

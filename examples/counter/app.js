@@ -1,6 +1,6 @@
-import { getInputId, refocus, reset, focusBlurListeners } from './helpers/gui.js';
+import { getInputId, refocus, reset, focusBlurListeners } from '../../src/gui.js';
 import { logger } from './helpers/logger.js';
-import { buildApp, div, p } from './helpers/html.js';
+import { buildApp, div, p } from '../../src/html.js';
 
 import { counterButtonBuilder } from './components/counter-button.js';
 import { resetButtonBuilder } from './components/reset-button.js';

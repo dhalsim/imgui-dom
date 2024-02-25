@@ -4,9 +4,7 @@
   "description": "An example of how to create immediate mode GUI web applications using DOM manipulation",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --exec \"http-server\" -e html,js,json",
-    "start": "http-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:counter": "nodemon --watch examples/counter --watch src --exec 'http-server . -p 8080 -o /examples/counter' -e html,js,json"
   },
   "repository": {
     "type": "git",

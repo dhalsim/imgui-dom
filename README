@@ -4,9 +4,10 @@ An example of how to create [Immediate mode](https://en.wikipedia.org/wiki/Immed
 
 # How to run
 
+## Counter example
+
 Install dependencies: `npm install`
-Develop: `npm run dev`
-Run: `npm start`
+Run: `npm start:counter`
 
 # TODOs
 
