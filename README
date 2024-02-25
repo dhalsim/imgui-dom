@@ -1,0 +1,3 @@
+# TODOs
+
+- [ ] Add Tailwind CSS to the project rather then using a CDN. How to tree shake it?

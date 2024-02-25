@@ -1,6 +1,6 @@
 import { getInputId } from '../gui-helpers.js';
 
-export const debugCheckboxBuilder = ({ app, loop, log, reset, appState }) => {
+export const debugCheckboxBuilder = ({ loop, log, resetFn, appState }) => {
   return () => {
     const checkbox = document.createElement('input');
 
@@ -8,6 +8,7 @@ export const debugCheckboxBuilder = ({ app, loop, log, reset, appState }) => {
 
     checkbox.id = getInputId({ appState });
     checkbox.name = "debug-toggle";
+    checkbox.classList = "h-5 w-5 text-blue-600";
     checkbox.checked = appState.debug;
 
     checkbox.addEventListener("change", (event) => {  
@@ -19,16 +20,16 @@ export const debugCheckboxBuilder = ({ app, loop, log, reset, appState }) => {
 
       log("debug is", appState.debug);
       
-      reset({ app, appState, log });
+      resetFn();
       
       requestAnimationFrame(loop);
     });
 
     const label = document.createElement('label');
+    label.classList = "text-sm font-medium text-gray-900 mr-2";
     label.setAttribute('for', checkbox.name);
     label.textContent = "Debug Logs";
 
-    app.appendChild(checkbox);
-    app.appendChild(label);
+    return [label, checkbox];
   }
 }

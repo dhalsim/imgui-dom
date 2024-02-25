@@ -1,10 +1,11 @@
 
 import { getInputId } from '../gui-helpers.js';
 
-export const counterButtonBuilder = ({ app, loop, reset, log, appState }) => {
+export const counterButtonBuilder = ({ loop, resetFn, log, appState }) => {
   return (val, updateFn) => {
     let button = document.createElement("button");
     button.id = getInputId({ appState });
+    button.classList = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
 
     button.textContent = val;
   
@@ -12,12 +13,11 @@ export const counterButtonBuilder = ({ app, loop, reset, log, appState }) => {
       log("counter button click");
   
       updateFn();
-
-      reset({ app, appState, log });
+      resetFn();
       
       requestAnimationFrame(loop);
     });
   
-    app.appendChild(button);
+    return button;
   }
 }

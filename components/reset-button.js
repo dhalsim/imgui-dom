@@ -1,10 +1,11 @@
 
 import { getInputId } from '../gui-helpers.js';
 
-export const resetButtonBuilder = ({ app, loop, log, reset, appState }) => {
+export const resetButtonBuilder = ({ loop, log, resetFn, appState }) => {
   return (updateFn) => {
     let button = document.createElement("button");
     button.id = getInputId({ appState });
+    button.classList = "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-3 rounded";
 
     button.textContent = "Reset Counter";
   
@@ -12,11 +13,11 @@ export const resetButtonBuilder = ({ app, loop, log, reset, appState }) => {
       log("reset button click");
   
       updateFn();
-      reset({ app, appState, log });
+      resetFn();
       
       requestAnimationFrame(loop);
     });
   
-    app.appendChild(button);
+    return button;
   }
 }

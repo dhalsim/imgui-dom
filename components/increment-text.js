@@ -1,20 +1,25 @@
 import { getInputId } from '../gui-helpers.js';
 
-export const incrementTextInputBuilder = ({ app, loop, log, reset, appState }) => {
+export const incrementTextInputBuilder = ({ loop, log, resetFn, appState }) => {
   return (initVal, updateFn) => {
     const numberInput = document.createElement('input');
+    
     numberInput.id = getInputId({ appState });
-
-    // Step 2: Set the type to 'number'
     numberInput.type = 'number';
     
-    // Step 3: Set the minimum and maximum values
     numberInput.min = '1';
     numberInput.max = '5';
     
-    // Optionally, set a default value
+    numberInput.classList = "px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm";
+    numberInput.style = "width: auto;"
     numberInput.value = initVal;
-  
+
+    const label = document.createElement('label');
+
+    label.classList = "text-sm font-medium text-gray-700 mr-3";
+    label.setAttribute('for', numberInput.id);
+    label.textContent = "Increment Value";
+
     numberInput.addEventListener("change", (event) => {
       const newVal = event.target.value;
 
@@ -22,11 +27,11 @@ export const incrementTextInputBuilder = ({ app, loop, log, reset, appState }) =
   
       updateFn(parseInt(newVal));
       
-      reset({ app, appState, log });
+      resetFn({ app, appState, log });
       
       requestAnimationFrame(loop);
     });
-  
-    app.appendChild(numberInput);
+
+    return [label, numberInput];
   }
 }
