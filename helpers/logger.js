@@ -1,6 +1,6 @@
-export function logger({ appState }) {
+export function logger({ state }) {
   return (...text) => {
-    if (appState.debug) {
+    if (state.debug) {
       console.log(...text);
     }
   }
