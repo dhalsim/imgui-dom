@@ -1,3 +1,5 @@
+import { labelFor } from "../helpers/html.js";
+
 export const debugCheckboxBuilder = ({ loop, log, resetFn, getInputIdFn }) => {
   return (checked, updateFn) => {
     const checkbox = document.createElement('input');
@@ -18,11 +20,10 @@ export const debugCheckboxBuilder = ({ loop, log, resetFn, getInputIdFn }) => {
       requestAnimationFrame(loop);
     });
 
-    const label = document.createElement('label');
-    label.classList = "text-sm font-medium text-gray-900 mr-2";
-    label.setAttribute('for', checkbox.id);
-    label.textContent = "Debug Logs";
-
-    return [label, checkbox];
+    return labelFor({ 
+      input: checkbox, 
+      classList: "text-sm font-medium text-gray-900 mr-2", 
+      text: "Debug Logs" 
+    });
   }
 }

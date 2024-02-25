@@ -19,6 +19,16 @@ export function p({ classList, text, description }) {
   return pElement;
 }
 
+export function labelFor({ input, classList, text }) {
+  const label = document.createElement('label');
+
+  label.classList = classList;
+  label.setAttribute('for', input.id);
+  label.textContent = text;
+
+  return [label, input];
+}
+
 export function buildApp({ appId, classList, children, description }) {
   const appDiv = document.getElementById(appId);
 

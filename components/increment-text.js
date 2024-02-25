@@ -1,3 +1,5 @@
+import { labelFor } from "../helpers/html.js";
+
 export const incrementTextInputBuilder = ({ loop, log, resetFn, getInputIdFn }) => {
   return (initVal, updateFn) => {
     const numberInput = document.createElement('input');
@@ -12,12 +14,6 @@ export const incrementTextInputBuilder = ({ loop, log, resetFn, getInputIdFn }) 
     numberInput.style = "width: auto;"
     numberInput.value = initVal;
 
-    const label = document.createElement('label');
-
-    label.classList = "text-sm font-medium text-gray-700 mr-3";
-    label.setAttribute('for', numberInput.id);
-    label.textContent = "Increment Value";
-
     numberInput.addEventListener("change", (event) => {
       const currentVal = event.target.value;
       const newVal = updateFn(parseInt(currentVal))
@@ -28,6 +24,10 @@ export const incrementTextInputBuilder = ({ loop, log, resetFn, getInputIdFn }) 
       requestAnimationFrame(loop);
     });
 
-    return [label, numberInput];
+    return labelFor({ 
+      input: numberInput, 
+      classList: "text-sm font-medium text-gray-700 mr-3", 
+      text: "Increment Value" 
+    });
   }
 }
