@@ -1,5 +1,5 @@
-export function reset({ app, appState }) {
-  console.log('reset called');
+export function reset({ app, appState, log }) {
+  log('reset called');
   
   appState.isResetting = true;
   
@@ -11,9 +11,9 @@ export function reset({ app, appState }) {
   appState.htmlElementOrderId = 0;
 }
 
-export function refocus({ app, appState }) {
+export function refocus({ app, appState, log }) {
   if (appState.focusedElementId) {
-    console.log('refocus to', appState.focusedElementId);
+    log('refocus to', appState.focusedElementId);
 
     app.querySelector(`#${appState.focusedElementId}`).focus();
   }
@@ -25,10 +25,10 @@ export function getInputId({ appState }) {
   return '__' + appState.appSelector + '_' + appState.htmlElementOrderId;
 }
 
-export function focusBlurListeners({ appState }) {
+export function focusBlurListeners({ appState, log }) {
   document.addEventListener('focus', function(event) {
     if (!appState.isResetting) {
-      console.log('focused element', event.target);
+      log('focused element', event.target);
   
       appState.focusedElementId = event.target.id;
     }  
@@ -36,7 +36,7 @@ export function focusBlurListeners({ appState }) {
   
   document.addEventListener('blur', function(event) {
     if (!appState.isResetting) {
-      console.log('blur element', event.target);
+      log('blur element', event.target);
   
       appState.focusedElementId = null;
     }

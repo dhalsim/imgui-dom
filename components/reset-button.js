@@ -1,7 +1,7 @@
 
-import { getInputId } from './gui-helpers.js';
+import { getInputId } from '../gui-helpers.js';
 
-export const resetButtonBuilder = ({ app, loop, reset, appState }) => {
+export const resetButtonBuilder = ({ app, loop, log, reset, appState }) => {
   return (updateFn) => {
     let button = document.createElement("button");
     button.id = getInputId({ appState });
@@ -9,10 +9,10 @@ export const resetButtonBuilder = ({ app, loop, reset, appState }) => {
     button.textContent = "Reset Counter";
   
     button.addEventListener("click", () => {
-      console.log("reset button click");
+      log("reset button click");
   
       updateFn();
-      reset({ app, appState });
+      reset({ app, appState, log });
       
       requestAnimationFrame(loop);
     });
