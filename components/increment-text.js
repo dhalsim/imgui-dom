@@ -19,13 +19,12 @@ export const incrementTextInputBuilder = ({ loop, log, resetFn, getInputIdFn }) 
     label.textContent = "Increment Value";
 
     numberInput.addEventListener("change", (event) => {
-      const newVal = event.target.value;
+      const currentVal = event.target.value;
+      const newVal = updateFn(parseInt(currentVal))
 
-      log("increment new value", newVal);
+      log("increment set to", newVal);
   
-      updateFn(parseInt(newVal));
-      resetFn();
-      
+      resetFn();    
       requestAnimationFrame(loop);
     });
 

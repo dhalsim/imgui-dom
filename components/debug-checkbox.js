@@ -1,21 +1,17 @@
-export const debugCheckboxBuilder = ({ loop, log, resetFn, getInputIdFn, state }) => {
-  return () => {
+export const debugCheckboxBuilder = ({ loop, log, resetFn, getInputIdFn }) => {
+  return (checked, updateFn) => {
     const checkbox = document.createElement('input');
 
     checkbox.type = 'checkbox';
 
     checkbox.id = getInputIdFn();
     checkbox.classList = "h-5 w-5 text-blue-600";
-    checkbox.checked = state.debug;
+    checkbox.checked = checked;
 
     checkbox.addEventListener("change", (event) => {  
-      if (event.target.checked) {
-        state.debug = true;
-      } else {
-        state.debug = false;
-      }
+      const newVal = updateFn(event.target.checked);
 
-      log("debug is", state.debug);
+      log("debug is", newVal);
       
       resetFn();
       

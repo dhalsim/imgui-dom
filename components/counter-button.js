@@ -8,9 +8,10 @@ export const counterButtonBuilder = ({ loop, resetFn, log, getInputIdFn }) => {
     button.textContent = val;
   
     button.addEventListener("click", () => {
-      log("counter button click");
+      const newVal = updateFn();
+
+      log("new counter", newVal);
   
-      updateFn();
       resetFn();
       
       requestAnimationFrame(loop);

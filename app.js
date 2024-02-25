@@ -2,7 +2,6 @@ import { getInputId, refocus, reset, focusBlurListeners } from './gui-helpers.js
 import { logger } from './helpers/logger.js';
 import { buildApp, div, p } from './helpers/html.js';
 
-
 import { counterButtonBuilder } from './components/counter-button.js';
 import { resetButtonBuilder } from './components/reset-button.js';
 import { incrementTextInputBuilder } from './components/increment-text.js';
@@ -36,7 +35,7 @@ async function loop() {
 
   const resetFn = () => reset({ app, state, log });
   
-  const appContext = { loop, resetFn, getInputIdFn, log, state };
+  const appContext = { loop, resetFn, getInputIdFn, log };
   
   const counterButton = counterButtonBuilder(appContext);
   const resetButton = resetButtonBuilder(appContext);
@@ -51,14 +50,14 @@ async function loop() {
         counterButton(state.counterValue, () => {
           if (state.counterValue < 5) {
             state.counterValue = state.counterValue + state.incrementValue;
-          
-            log("counterValue", state.counterValue)
           }
+          
+          return state.counterValue;
         }),
         resetButton(() => {    
           state.counterValue = 0;
-          
-          log("counterValue", state.counterValue);
+
+          return state.counterValue;
         })
       ]
     }),
@@ -70,7 +69,11 @@ async function loop() {
     div({
       description: "Container for debug checkbox and its label",
       classList: "flex items-center mb-4",
-      children: debugCheckbox()
+      children: debugCheckbox(state.debug, (newChecked) => {
+        state.debug = newChecked;
+
+        return state.debug;
+      })
     }),
     div({
       description: "Container for counter limit warning text",
