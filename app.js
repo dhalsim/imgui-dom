@@ -83,11 +83,16 @@ async function loop() {
       classList: "flex items-center mb-4",
       children: state.counterValue >= 5 
         ? [
-            p({
-              classList: "text-red-500 text-xl",
-              text: "You reached your counter limit. Please reset"
-            })
-          ] 
+            state.counterValue === 8 
+              ? p({
+                  classList: "text-blue-500 text-xl",
+                  text: "Congrats, you reached the maximum count possible!"
+                })
+              : p({
+                  classList: "text-red-500 text-xl",
+                  text: "You reached your counter limit. Please reset"
+                })
+          ]
         : []
     })
   ];
