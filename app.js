@@ -1,4 +1,4 @@
-import { getInputId, refocus, reset, focusBlurListeners } from './gui-helpers.js';
+import { getInputId, refocus, reset, focusBlurListeners } from './helpers/gui.js';
 import { logger } from './helpers/logger.js';
 import { buildApp, div, p } from './helpers/html.js';
 
@@ -42,18 +42,21 @@ async function loop() {
   const incrementTextInput = incrementTextInputBuilder(appContext);
   const debugCheckbox = debugCheckboxBuilder(appContext);
 
+  const isCounterDisabled = (val) => val >= 5;
+  const counterUpdate = () => {
+    if (!isCounterDisabled(state.counterValue)) {
+      state.counterValue = state.counterValue + state.incrementValue;
+    }
+    
+    return state.counterValue;
+  }
+
   const htmlElements = [
     div({
       description: "Container for counter and reset buttons",
       classList: "flex justify-between items-center mb-4", 
       children: [
-        counterButton(state.counterValue, () => {
-          if (state.counterValue < 5) {
-            state.counterValue = state.counterValue + state.incrementValue;
-          }
-          
-          return state.counterValue;
-        }),
+        counterButton(state.counterValue, counterUpdate, isCounterDisabled(state.counterValue)),
         resetButton(() => {    
           state.counterValue = 0;
 

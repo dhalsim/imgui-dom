@@ -32,7 +32,7 @@ export function labelFor({ input, classList, text }) {
 export function buildApp({ appId, classList, children, description }) {
   const appDiv = document.getElementById(appId);
 
-  appDiv.classList = classList;// "max-w-md mx-auto py-6";
+  appDiv.classList = classList;
 
   children.forEach(element => {
     appDiv.appendChild(element);

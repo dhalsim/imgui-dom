@@ -1,3 +1,13 @@
+# Description
+
+An example of how to create [Immediate mode](https://en.wikipedia.org/wiki/Immediate_mode_(computer_graphics)) GUI web applications using DOM manipulation.
+
+# How to run
+
+Install dependencies: `npm install`
+Develop: `npm run dev`
+Run: `npm start`
+
 # TODOs
 
-- [ ] Add Tailwind CSS to the project rather then using a CDN. How to tree shake it?
+- [ ] Add Tailwind CSS to the project rather then using a CDN for treeshaking.
