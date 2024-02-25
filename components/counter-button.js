@@ -1,10 +1,8 @@
 
-import { getInputId } from '../gui-helpers.js';
-
-export const counterButtonBuilder = ({ loop, resetFn, log, appState }) => {
+export const counterButtonBuilder = ({ loop, resetFn, log, getInputIdFn }) => {
   return (val, updateFn) => {
     let button = document.createElement("button");
-    button.id = getInputId({ appState });
+    button.id = getInputIdFn();
     button.classList = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
 
     button.textContent = val;

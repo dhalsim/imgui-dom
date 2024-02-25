@@ -1,10 +1,8 @@
-import { getInputId } from '../gui-helpers.js';
-
-export const incrementTextInputBuilder = ({ loop, log, resetFn, appState }) => {
+export const incrementTextInputBuilder = ({ loop, log, resetFn, getInputIdFn }) => {
   return (initVal, updateFn) => {
     const numberInput = document.createElement('input');
     
-    numberInput.id = getInputId({ appState });
+    numberInput.id = getInputIdFn();
     numberInput.type = 'number';
     
     numberInput.min = '1';
@@ -26,8 +24,7 @@ export const incrementTextInputBuilder = ({ loop, log, resetFn, appState }) => {
       log("increment new value", newVal);
   
       updateFn(parseInt(newVal));
-      
-      resetFn({ app, appState, log });
+      resetFn();
       
       requestAnimationFrame(loop);
     });

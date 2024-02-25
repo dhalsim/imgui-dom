@@ -1,6 +1,7 @@
-import { refocus, reset, focusBlurListeners } from './gui-helpers.js';
+import { getInputId, refocus, reset, focusBlurListeners } from './gui-helpers.js';
 import { logger } from './helpers/logger.js';
 import { buildApp, div, p } from './helpers/html.js';
+
 
 import { counterButtonBuilder } from './components/counter-button.js';
 import { resetButtonBuilder } from './components/reset-button.js';
@@ -9,7 +10,7 @@ import { debugCheckboxBuilder } from './components/debug-checkbox.js';
 
 const appId = "app";
 
-let appState = {
+const appState = {
   debug: true,
   loopCounter: 0,
   counterValue: 0,
@@ -20,7 +21,8 @@ let appState = {
   isResetting: false,
 };
 
-const log = logger({ appState })
+const log = logger({ appState });
+const getInputIdFn = () => getInputId({ appState });
 
 focusBlurListeners({ appState, log });
 
@@ -35,57 +37,57 @@ async function loop() {
 
   const resetFn = () => reset({ app, appState, log });
   
-  const appContext = { loop, resetFn, log, appState };
+  const appContext = { loop, resetFn, getInputIdFn, log, appState };
   
   const counterButton = counterButtonBuilder(appContext);
   const resetButton = resetButtonBuilder(appContext);
   const incrementTextInput = incrementTextInputBuilder(appContext);
   const debugCheckbox = debugCheckboxBuilder(appContext);
 
-  const buttonContainer = div({
-    classList: "flex justify-between items-center mb-4", 
-    children: [
-      counterButton(appState.counterValue, () => {
-        if (appState.counterValue < 5) {
-          appState.counterValue = appState.counterValue + appState.incrementValue;
-        
-          appContext.log("counterValue", appState.counterValue)
-        }
-      }),
-      resetButton(() => {    
-        appState.counterValue = 0;
-        
-        appContext.log("counterValue", appState.counterValue);
-      })
-    ]
-  });
+  const htmlElements = [
+    div({
+      description: "Container for counter and reset buttons",
+      classList: "flex justify-between items-center mb-4", 
+      children: [
+        counterButton(appState.counterValue, () => {
+          if (appState.counterValue < 5) {
+            appState.counterValue = appState.counterValue + appState.incrementValue;
+          
+            log("counterValue", appState.counterValue)
+          }
+        }),
+        resetButton(() => {    
+          appState.counterValue = 0;
+          
+          log("counterValue", appState.counterValue);
+        })
+      ]
+    }),
+    div({
+      description: "Container for increment number input and its label",
+      classList: "flex items-center justify-between mb-4",
+      children: incrementTextInput(appState.incrementValue, (newVal) => appState.incrementValue = newVal)
+    }),
+    div({
+      description: "Container for debug checkbox and its label",
+      classList: "flex items-center mb-4",
+      children: debugCheckbox()
+    }),
+    div({
+      description: "Container for counter limit warning text",
+      classList: "flex items-center mb-4",
+      children: appState.counterValue >= 5 
+        ? [
+            p({
+              classList: "text-red-500 text-xl",
+              text: "You reached your counter limit. Please reset"
+            })
+          ] 
+        : []
+    })
+  ];
 
-  const incrementContainer = div({
-    classList: "flex items-center justify-between mb-4",
-    children: incrementTextInput(appState.incrementValue, (newVal) => appState.incrementValue = newVal)
-  })
-
-  const checkboxContainer = div({
-    classList: "flex items-center mb-4",
-    children: debugCheckbox()
-  });
-
-  const warningTextContainer = div({
-    classList: "flex items-center mb-4",
-    children: appState.counterValue >= 5 
-      ? [
-          p({
-            classList: "text-red-500 text-xl",
-            text: "You reached your counter limit. Please reset"
-          })
-        ] 
-      : []
-  });
-
-  app.appendChild(buttonContainer);
-  app.appendChild(incrementContainer);
-  app.appendChild(checkboxContainer);
-  app.appendChild(warningTextContainer);
+  htmlElements.forEach((el) => app.appendChild(el));
 
   refocus({ app, appState, log });
 }
