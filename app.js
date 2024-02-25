@@ -1,4 +1,4 @@
-import { focus, reset } from './gui-helpers.js';
+import { refocus, reset, focusBlurListeners } from './gui-helpers.js';
 
 import { counterButtonBuilder } from './counter-button.js';
 import { resetButtonBuilder } from './reset-button.js';
@@ -16,21 +16,7 @@ let appState = {
   isResetting: false
 };
 
-document.addEventListener('focus', function(event) {
-  if (!appState.isResetting) {
-    console.log('focused element', event.target);
-
-    appState.focusedElementId = event.target.id;
-  }  
-}, true);
-
-document.addEventListener('blur', function(event) {
-  if (!appState.isResetting) {
-    console.log('blur element', event.target);
-
-    appState.focusedElementId = null;
-  }
-}, true);
+focusBlurListeners({ appState });
 
 async function loop() {
   console.log("loop", appState.loopCounter++);
@@ -67,7 +53,7 @@ async function loop() {
     app.appendChild(h1);
   }
 
-  focus({ app, appState });
+  refocus({ app, appState });
 }
 
 requestAnimationFrame(loop);
