@@ -1,5 +1,5 @@
 export function reset({ app, state, log }) {
-  log('reset called');
+  log('reset is called');
   
   state.isResetting = true;
   

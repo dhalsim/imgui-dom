@@ -1,7 +1,9 @@
 export function div({ classList, children, description }) {
   const containerDiv = document.createElement('div');
 
-  containerDiv.classList = classList;
+  if (classList) {
+    containerDiv.classList = classList;
+  }
 
   children.forEach(element => {
     containerDiv.appendChild(element);
@@ -19,6 +21,15 @@ export function p({ classList, text, description }) {
   return pElement;
 }
 
+export function h1({ classList, text, description }) {
+  const h1Element = document.createElement('h1');
+
+  h1Element.classList = classList;
+  h1Element.textContent = text;
+
+  return h1Element;
+}
+
 export function labelFor({ input, classList, text }) {
   const label = document.createElement('label');
 
@@ -29,7 +40,7 @@ export function labelFor({ input, classList, text }) {
   return [label, input];
 }
 
-export function buildApp({ appId, classList, children, description }) {
+export function buildApp({ appId, classList, children = [], description }) {
   const appDiv = document.getElementById(appId);
 
   appDiv.classList = classList;

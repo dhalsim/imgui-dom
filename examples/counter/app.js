@@ -1,13 +1,14 @@
 import { getInputId, refocus, reset, focusBlurListeners } from '../../src/gui.js';
-import { logger } from './helpers/logger.js';
 import { buildApp, div, p } from '../../src/html.js';
+
+import { logger } from '../helpers/logger.js';
 
 import { counterButtonBuilder } from './components/counter-button.js';
 import { resetButtonBuilder } from './components/reset-button.js';
 import { incrementTextInputBuilder } from './components/increment-text.js';
 import { debugCheckboxBuilder } from './components/debug-checkbox.js';
 
-const appId = "my-app";
+const appId = "counter-app";
 
 const state = {
   debug: true,
@@ -29,8 +30,7 @@ async function loop() {
 
   const app = buildApp({ 
     appId,
-    classList: "w-52 mx-auto py-6",
-    children: []
+    classList: "w-52 mx-auto py-6"
   });
 
   const resetFn = () => reset({ app, state, log });
