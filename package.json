@@ -5,15 +5,17 @@
   "main": "app.js",
   "scripts": {
     "start:counter": "nodemon --watch examples/counter --watch src --exec 'http-server . -p 8080 -o /examples/counter' -e html,js,json",
-    "start:todo": "nodemon --watch examples/todo --watch src --exec 'http-server . -p 8080 -o /examples/todo' -e html,js,json"
+    "start:todo": "nodemon --watch examples/todo --watch src --exec 'http-server . -p 8080 -o /examples/todo' -e html,js,json",
+    "build:counter": "mkdir output && mkdir output/examples && cp -R src output/src && cp -R examples/counter output/examples/counter",
+    "build:todo": "mkdir output && mkdir output/examples && cp -R src output/src && cp -R examples/todo output/examples/todo"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dhalsim/imgui-dom.git"
   },
   "devDependencies": {
-    "nodemon": "3.1.0",
-    "http-server": "14.1.1"
+    "http-server": "14.1.1",
+    "nodemon": "3.1.0"
   },
   "keywords": [
     "imgui",
