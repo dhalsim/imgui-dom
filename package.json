@@ -6,9 +6,7 @@
   "scripts": {
     "start:counter": "nodemon --watch examples/counter --watch src --exec 'http-server . -p 8080 -o /examples/counter' -e html,js,json",
     "start:todo": "nodemon --watch examples/todo --watch src --exec 'http-server . -p 8080 -o /examples/todo' -e html,js,json",
-    "clean:build": "rm -rf output",
-    "build:counter": "npm run clean:build && mkdir output && mkdir output/examples && cp -R src output/src && cp -R examples/counter output/examples/counter",
-    "build:todo": "npm run clean:build && mkdir output && mkdir output/examples && cp -R src output/src && cp -R examples/todo output/examples/todo"
+    "build:vercel": "rm -rf output && mkdir output && cp -R src/ output/src/ && cp -R examples/ output/examples"
   },
   "repository": {
     "type": "git",
