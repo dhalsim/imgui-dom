@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start:counter": "nodemon --watch examples/counter --watch src --exec 'http-server . -p 8080 -o /examples/counter' -e html,js,json",
-    "start:todo": "nodemon --watch examples/todo --watch src --exec 'http-server . -p 8080 -o /examples/todo' -e html,js,json",
-    "build:vercel": "rm -rf output && mkdir output && cp -R src/ output/src/ && cp -R examples/ output/examples"
+    "start:todo": "nodemon --watch examples/todo --watch src --exec 'http-server . -p 8080 -o /examples/todo' -e html,js,json"
   },
   "repository": {
     "type": "git",
