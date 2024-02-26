@@ -1,5 +1,5 @@
 export const addButtonBuilder = ({ loop, resetFn, log, getInputIdFn }, classList) => {
-  return (updateFn) => {
+  return ({ updateFn, desciption }) => {
     const button = document.createElement('button');
     button.id = getInputIdFn();
     button.classList = classList;

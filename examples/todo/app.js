@@ -7,6 +7,7 @@ import { inputTextBuilder } from './components/input-text.js';
 import { addButtonBuilder } from './components/add-button.js';
 import { doneToggleButtonBuilder } from './components/done-button.js';
 import { removeButtonBuilder } from './components/remove-button.js';
+import { debugCheckboxBuilder } from './components/debug-checkbox.js';
 
 const appId = "todo-app";
 
@@ -39,12 +40,13 @@ async function loop() {
   });
 
   const resetFn = () => reset({ app, state, log });
-  const appContext = { loop, resetFn, log, getInputIdFn };
+  const appContext = { loop, resetFn, log, getInputIdFn, state };
 
   const inputText = inputTextBuilder(appContext);
   const addButton = addButtonBuilder(appContext, buttonClassList);
   const doneToggleButton = doneToggleButtonBuilder(appContext, buttonClassList);
   const removeButton = removeButtonBuilder(appContext, buttonClassList);
+  const debugCheckbox = debugCheckboxBuilder(appContext);
 
   const htmlElements = [
     div({
@@ -61,20 +63,23 @@ async function loop() {
             div({
               classList: "flex mt-4",
               children: [
-                inputText(
-                  state.inputText, 
-                  (event) => state.inputText = event.target.value,
-                  (newVal) => {
-                    state.todoItems.push({ title: newVal, done: false })
-    
-                    // TODO: not exactly working
-                    state.inputText = "";
-                  }),
-                addButton(() => {
-                  if (state.inputText) {
-                    state.todoItems.push({ title: state.inputText, done: false })
+                inputText({
+                  description: "Add Todo Textbox",
+                  value: state.inputText, 
+                  updateFn: (newVal) => state.inputText = newVal,
+                  addTodoFn: (newVal) => {
+                    state.todoItems.push({ title: newVal, done: false });
     
                     state.inputText = "";
+                  }
+                }),
+                addButton({
+                  updateFn: () => {
+                    if (state.inputText) {
+                      state.todoItems.push({ title: state.inputText, done: false })
+      
+                      state.inputText = "";
+                    }
                   }
                 })
               ]
@@ -95,6 +100,10 @@ async function loop() {
               ]
             })
           ) 
+        }),
+        div({
+          classList: "flex items-center pt-8",
+          children: debugCheckbox(state.debug, (val) => state.debug = val)
         })
       ]
     })
