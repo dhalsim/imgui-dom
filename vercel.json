@@ -1,7 +1,0 @@
-{
-  "installCommand": "npm install --only=production",
-  "buildCommand": "npm run build:vercel",
-  "framework": null,
-  "cleanUrls": true,
-  "outputDirectory": "output"
-}
