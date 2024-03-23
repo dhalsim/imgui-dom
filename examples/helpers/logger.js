@@ -3,5 +3,5 @@ export function logger({ state }) {
     if (state.debug) {
       console.log(...text);
     }
-  }
+  };
 }

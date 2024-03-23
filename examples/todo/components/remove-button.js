@@ -1,6 +1,9 @@
-export const removeButtonBuilder = ({ loop, resetFn, log, getInputIdFn }, classList) => {
+export const removeButtonBuilder = (
+  { loop, resetFn, log, getInputIdFn },
+  classList,
+) => {
   return (updateFn) => {
-    const button = document.createElement('button');
+    const button = document.createElement("button");
     button.id = getInputIdFn();
     button.classList = classList;
     button.textContent = "Remove";
@@ -9,12 +12,12 @@ export const removeButtonBuilder = ({ loop, resetFn, log, getInputIdFn }, classL
       updateFn();
 
       log("Remove button clicked");
-  
+
       resetFn();
-      
+
       requestAnimationFrame(loop);
     });
 
     return button;
-  }
+  };
 };

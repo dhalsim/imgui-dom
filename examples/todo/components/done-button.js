@@ -1,6 +1,9 @@
-export const doneToggleButtonBuilder = ({ loop, resetFn, log, getInputIdFn }, classList) => {
+export const doneToggleButtonBuilder = (
+  { loop, resetFn, log, getInputIdFn },
+  classList,
+) => {
   return (alreadyDone, updateFn) => {
-    const button = document.createElement('button');
+    const button = document.createElement("button");
     button.id = getInputIdFn();
     button.classList = classList;
     button.textContent = alreadyDone ? "Undone" : "Done";
@@ -9,12 +12,12 @@ export const doneToggleButtonBuilder = ({ loop, resetFn, log, getInputIdFn }, cl
       updateFn();
 
       log(`${button.textContent} button clicked`);
-  
+
       resetFn();
-      
+
       requestAnimationFrame(loop);
     });
 
     return button;
-  }
+  };
 };

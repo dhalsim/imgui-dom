@@ -1,13 +1,18 @@
-import { getInputId, refocus, reset, focusBlurListeners } from '../../src/gui.js';
-import { buildApp, div, h1, p } from '../../src/html.js';
+import {
+  getInputId,
+  refocus,
+  reset,
+  focusBlurListeners,
+} from "../../src/gui.js";
+import { buildApp, div, h1, p } from "../../src/html.js";
 
-import { logger } from '../helpers/logger.js';
+import { logger } from "../helpers/logger.js";
 
-import { inputTextBuilder } from './components/input-text.js';
-import { addButtonBuilder } from './components/add-button.js';
-import { doneToggleButtonBuilder } from './components/done-button.js';
-import { removeButtonBuilder } from './components/remove-button.js';
-import { debugCheckboxBuilder } from './components/debug-checkbox.js';
+import { inputTextBuilder } from "./components/input-text.js";
+import { addButtonBuilder } from "./components/add-button.js";
+import { doneToggleButtonBuilder } from "./components/done-button.js";
+import { removeButtonBuilder } from "./components/remove-button.js";
+import { debugCheckboxBuilder } from "./components/debug-checkbox.js";
 
 const appId = "todo-app";
 
@@ -18,12 +23,13 @@ const state = {
   focusedElementId: null,
   isResetting: false,
   inputText: "",
-  todoItems: []
+  todoItems: [],
 };
 
 const log = logger({ state });
 const getInputIdFn = () => getInputId({ state, appId });
-const buttonClassList = "py-2 px-3 mr-3 bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-semibold rounded-md shadow focus:outline-none";
+const buttonClassList =
+  "py-2 px-3 mr-3 bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-semibold rounded-md shadow focus:outline-none";
 
 focusBlurListeners({ state, log });
 
@@ -33,10 +39,11 @@ async function loop() {
   }
 
   log("loop", state.loopCounter++);
-  
-  const app = buildApp({ 
+
+  const app = buildApp({
     appId,
-    classList: "h-100 w-full flex items-center justify-center bg-teal-lightest font-sans"
+    classList:
+      "h-100 w-full flex items-center justify-center bg-teal-lightest font-sans",
   });
 
   const resetFn = () => reset({ app, state, log });
@@ -58,55 +65,60 @@ async function loop() {
           children: [
             h1({
               classList: "text-grey-darkest",
-              text: "Todo List"
+              text: "Todo List",
             }),
             div({
               classList: "flex mt-4",
               children: [
                 inputText({
                   description: "Add Todo Textbox",
-                  value: state.inputText, 
-                  updateFn: (newVal) => state.inputText = newVal,
+                  value: state.inputText,
+                  updateFn: (newVal) => (state.inputText = newVal),
                   addTodoFn: (newVal) => {
                     state.todoItems.push({ title: newVal, done: false });
-    
+
                     state.inputText = "";
-                  }
+                  },
                 }),
                 addButton({
                   updateFn: () => {
                     if (state.inputText) {
-                      state.todoItems.push({ title: state.inputText, done: false })
-      
+                      state.todoItems.push({
+                        title: state.inputText,
+                        done: false,
+                      });
+
                       state.inputText = "";
                     }
-                  }
-                })
-              ]
-            })
-          ]
+                  },
+                }),
+              ],
+            }),
+          ],
         }),
-        div({ 
-          children: state.todoItems.map((item, i) => 
+        div({
+          children: state.todoItems.map((item, i) =>
             div({
               classList: "flex mb-4 items-center",
               children: [
                 p({
-                  classList: "w-full text-grey-darkest" + (item.done ? " line-through" : ""),
-                  text: item.title
+                  classList:
+                    "w-full text-grey-darkest" +
+                    (item.done ? " line-through" : ""),
+                  text: item.title,
                 }),
-                doneToggleButton(item.done, () => item.done = !item.done),
-                removeButton(() => state.todoItems.splice(i, 1))
-              ]
-            })
-          ) 
+                doneToggleButton(item.done, () => (item.done = !item.done)),
+                removeButton(() => state.todoItems.splice(i, 1)),
+              ],
+            }),
+          ),
         }),
         div({
           classList: "flex items-center pt-8",
-          children: debugCheckbox(state.debug, (val) => state.debug = val)
-        })
-      ]
-    })
+          children: debugCheckbox(state.debug, (val) => (state.debug = val)),
+        }),
+      ],
+    }),
   ];
 
   htmlElements.forEach((el) => app.appendChild(el));
