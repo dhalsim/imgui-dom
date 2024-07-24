@@ -20,6 +20,10 @@ export function refocus({ app, state, log }) {
 }
 
 export function getInputId({ appId, state }) {
+  if (!state.htmlElementOrderId) {
+    state.htmlElementOrderId = 0;
+  }
+
   state.htmlElementOrderId++;
 
   return "__" + appId + "_" + state.htmlElementOrderId;
